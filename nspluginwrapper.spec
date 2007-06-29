@@ -1,9 +1,9 @@
 # NOTE: this is a Linux-specific package, don't use the embedded
 # viewer on non-Linux platforms.
 %define name	nspluginwrapper
-%define version	0.9.91.3
+%define version	0.9.91.4
 #define svndate	20061227
-%define rel	2
+%define rel	1
 %define release	%mkrel %{?svndate:0.%{svndate}.}%{rel}
 
 # define 32-bit arch of multiarch platforms
@@ -49,15 +49,11 @@ Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 Source0:	%{name}-%{version}%{?svndate:-%{svndate}}.tar.bz2
-Patch0:		nspluginwrapper-0.9.91.3-linux-only.patch
-Patch1:		nspluginwrapper-0.9.91.3-dont-wrap-host-plugins.patch
 License:	GPL
 Group:		Networking/WWW
 Url:		http://gwenole.beauchesne.info/projects/nspluginwrapper/
 BuildRequires:	gtk+2-devel
-%if %{mdkversion} >= 200700
 BuildRequires:	libxt-devel
-%endif
 Provides:	%{name}-%{_arch} = %{version}
 Requires(post):	 %{name}-%{target_arch} = %{version}-%{release}
 Requires(preun): %{name}-%{target_arch} = %{version}-%{release}
@@ -94,8 +90,6 @@ This package provides the npviewer program for %{target_os}/%{target_arch}.
 
 %prep
 %setup -q
-%patch0 -p1 -b .linux-only
-%patch1 -p1 -b .dont-wrap-host-plugins
 
 %build
 export CFLAGS="$RPM_OPT_FLAGS"
@@ -217,5 +211,3 @@ fi
 %{pkglibdir}/%{target_arch}/%{target_os}/npviewer.bin
 %{pkglibdir}/%{target_arch}/%{target_os}/libxpcom.so
 %endif
-
-
