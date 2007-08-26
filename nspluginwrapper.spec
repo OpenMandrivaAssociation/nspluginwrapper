@@ -1,7 +1,7 @@
 # NOTE: this is a Linux-specific package, don't use the embedded
 # viewer on non-Linux platforms.
 %define name	nspluginwrapper
-%define version	0.9.91.4
+%define version	0.9.91.5
 #define svndate	20061227
 %define rel	1
 %define release	%mkrel %{?svndate:0.%{svndate}.}%{rel}
