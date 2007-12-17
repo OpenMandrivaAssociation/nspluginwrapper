@@ -57,7 +57,6 @@ BuildRequires:	libxt-devel
 Provides:	%{name}-%{_arch} = %{version}
 Requires(post):	 %{name}-%{target_arch} = %{version}-%{release}
 Requires(preun): %{name}-%{target_arch} = %{version}-%{release}
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 nspluginwrapper makes it possible to use Netscape 4 compatible plugins
