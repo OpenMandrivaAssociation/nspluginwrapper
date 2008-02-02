@@ -3,7 +3,7 @@
 %define name	nspluginwrapper
 %define version	0.9.91.5
 #define svndate	20061227
-%define rel	1
+%define rel	2
 %define release	%mkrel %{?svndate:0.%{svndate}.}%{rel}
 
 # define 32-bit arch of multiarch platforms
@@ -49,7 +49,8 @@ Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 Source0:	%{name}-%{version}%{?svndate:-%{svndate}}.tar.bz2
-License:	GPL
+Patch0:		nspluginwrapper-0.9.91.5-npviewer-gthread.patch
+License:	GPLv2+
 Group:		Networking/WWW
 Url:		http://gwenole.beauchesne.info/projects/nspluginwrapper/
 BuildRequires:	gtk+2-devel
@@ -90,6 +91,7 @@ This package provides the npviewer program for %{target_os}/%{target_arch}.
 
 %prep
 %setup -q
+%patch0 -p1 -b .npviewer-gthread
 
 %build
 export CFLAGS="$RPM_OPT_FLAGS"
@@ -185,7 +187,7 @@ fi
 
 %files
 %defattr(-,root,root)
-%doc README COPYING NEWS
+%doc README NEWS
 %{_bindir}/%{name}
 %{plugindir}/npwrapper.so
 %dir %{pkglibdir}
