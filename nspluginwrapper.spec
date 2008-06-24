@@ -3,7 +3,7 @@
 %define name	nspluginwrapper
 %define version	0.9.91.5
 #define svndate	20061227
-%define rel	2
+%define rel	3
 %define release	%mkrel %{?svndate:0.%{svndate}.}%{rel}
 
 # define 32-bit arch of multiarch platforms
@@ -50,6 +50,9 @@ Version:	%{version}
 Release:	%{release}
 Source0:	%{name}-%{version}%{?svndate:-%{svndate}}.tar.bz2
 Patch0:		nspluginwrapper-0.9.91.5-npviewer-gthread.patch
+# fix focus issue in Adobe Acrobat 
+# https://bugzilla.novell.com/show_bug.cgi?id=353503
+Patch1:		nspluginwrapper-noxembed.patch
 License:	GPLv2+
 Group:		Networking/WWW
 Url:		http://gwenole.beauchesne.info/projects/nspluginwrapper/
@@ -92,6 +95,7 @@ This package provides the npviewer program for %{target_os}/%{target_arch}.
 %prep
 %setup -q
 %patch0 -p1 -b .npviewer-gthread
+%patch1 -p0 -b .noxembed
 
 %build
 export CFLAGS="$RPM_OPT_FLAGS"
