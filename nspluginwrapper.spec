@@ -3,7 +3,7 @@
 %define name	nspluginwrapper
 %define version	0.9.91.5
 #define svndate	20061227
-%define rel	3
+%define rel	4
 %define release	%mkrel %{?svndate:0.%{svndate}.}%{rel}
 
 # define 32-bit arch of multiarch platforms
@@ -130,6 +130,11 @@ if [ $1 = 1 ]; then
   %{_bindir}/%{name} -v -a -i
 else
   %{_bindir}/%{name} -v -a -u
+  %if %{mdkversion} >= 200810
+    if [ -f /usr/lib/mozilla/plugins/libflashplayer.so ] && [ ! -f %{plugindir}/npwrapper.libflashplayer.so ]; then
+      %{_bindir}/%{name} -v -i /usr/lib/mozilla/plugins/libflashplayer.so
+    fi
+  %endif
 fi
 
 %preun
@@ -137,15 +142,27 @@ if [ $1 = 0 ]; then
   %{_bindir}/%{name} -v -a -r
 fi
 
-# Flash Player 7
-%triggerin -- FlashPlayer
+# Flash Player
+%triggerin -- FlashPlayer < 9.0.115.0
 if [ -f %{plugindir}/npwrapper.libflashplayer.so ]; then
   %{_bindir}/%{name} -v -u %{plugindir}/npwrapper.libflashplayer.so
 else
   %{_bindir}/%{name} -v -i /usr/lib/mozilla/plugins/libflashplayer.so
 fi
 
-%triggerpostun -- FlashPlayer
+%triggerpostun -- FlashPlayer < 9.0.115.0
+if [ ! -f /usr/lib/mozilla/plugins/libflashplayer.so ]; then
+  %{_bindir}/%{name} -v -r %{plugindir}/npwrapper.libflashplayer.so
+fi
+
+%triggerin -- FlashPlayer-plugin
+if [ -f %{plugindir}/npwrapper.libflashplayer.so ]; then
+  %{_bindir}/%{name} -v -u %{plugindir}/npwrapper.libflashplayer.so
+else
+  %{_bindir}/%{name} -v -i /usr/lib/mozilla/plugins/libflashplayer.so
+fi
+
+%triggerpostun -- FlashPlayer-plugin
 if [ ! -f /usr/lib/mozilla/plugins/libflashplayer.so ]; then
   %{_bindir}/%{name} -v -r %{plugindir}/npwrapper.libflashplayer.so
 fi
