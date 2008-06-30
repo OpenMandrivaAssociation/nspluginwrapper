@@ -1,9 +1,9 @@
 # NOTE: this is a Linux-specific package, don't use the embedded
 # viewer on non-Linux platforms.
 %define name	nspluginwrapper
-%define version	0.9.91.5
+%define version	1.0.0
 #define svndate	20061227
-%define rel	4
+%define rel	1
 %define release	%mkrel %{?svndate:0.%{svndate}.}%{rel}
 
 # define 32-bit arch of multiarch platforms
@@ -48,14 +48,10 @@ Summary:	A compatibility layer for Netscape 4 plugins
 Name:		%{name}
 Version:	%{version}
 Release:	%{release}
-Source0:	%{name}-%{version}%{?svndate:-%{svndate}}.tar.bz2
-Patch0:		nspluginwrapper-0.9.91.5-npviewer-gthread.patch
-# fix focus issue in Adobe Acrobat 
-# https://bugzilla.novell.com/show_bug.cgi?id=353503
-Patch1:		nspluginwrapper-noxembed.patch
 License:	GPLv2+
 Group:		Networking/WWW
-Url:		http://gwenole.beauchesne.info/projects/nspluginwrapper/
+URL:		http://gwenole.beauchesne.info/projects/nspluginwrapper/
+Source0:	%{name}-%{version}%{?svndate:-%{svndate}}.tar.bz2
 BuildRequires:	gtk+2-devel
 BuildRequires:	libxt-devel
 Provides:	%{name}-%{_arch} = %{version}
@@ -93,9 +89,8 @@ This package provides the npviewer program for %{target_os}/%{target_arch}.
 %endif
 
 %prep
+
 %setup -q
-%patch0 -p1 -b .npviewer-gthread
-%patch1 -p0 -b .noxembed
 
 %build
 export CFLAGS="$RPM_OPT_FLAGS"
