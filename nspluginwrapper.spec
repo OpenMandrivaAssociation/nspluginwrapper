@@ -205,6 +205,7 @@ fi
 %defattr(-,root,root)
 %doc README NEWS
 %{_bindir}/%{name}
+%{_bindir}/nspluginplayer
 %{plugindir}/npwrapper.so
 %dir %{pkglibdir}
 %dir %{pkglibdir}/noarch
