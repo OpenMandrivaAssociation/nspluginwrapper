@@ -52,6 +52,11 @@ License:	GPLv2+
 Group:		Networking/WWW
 URL:		http://gwenole.beauchesne.info/projects/nspluginwrapper/
 Source0:	%{name}-%{version}%{?svndate:-%{svndate}}.tar.bz2
+# from Fedora
+Patch2:         nspluginwrapper-1.1.0-runtime-restart.patch
+Patch3:         nspluginwrapper-1.1.0-fork.patch
+Patch4:         nspluginwrapper-0.9.91.5-shutdown.patch
+Patch5:         nspluginwrapper-0.9.91.5-sleep.patch
 BuildRequires:	gtk+2-devel
 BuildRequires:	libxt-devel
 Provides:	%{name}-%{_arch} = %{version}
@@ -91,6 +96,10 @@ This package provides the npviewer program for %{target_os}/%{target_arch}.
 %prep
 
 %setup -q
+%patch2 -p1 -b .restart
+%patch3 -p1 -b .fork
+%patch4 -p1 -b .shutdown
+%patch5 -p1 -b .sleep
 
 %build
 export CFLAGS="$RPM_OPT_FLAGS"
