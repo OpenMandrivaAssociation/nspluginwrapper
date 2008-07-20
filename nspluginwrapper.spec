@@ -57,6 +57,7 @@ Patch2:         nspluginwrapper-1.1.0-runtime-restart.patch
 Patch3:         nspluginwrapper-1.1.0-fork.patch
 Patch4:         nspluginwrapper-0.9.91.5-shutdown.patch
 Patch5:         nspluginwrapper-0.9.91.5-sleep.patch
+BuildRequires:	curl-devel
 BuildRequires:	gtk+2-devel
 BuildRequires:	libxt-devel
 Provides:	%{name}-%{_arch} = %{version}
