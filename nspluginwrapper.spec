@@ -214,9 +214,11 @@ fi
 %dir %{pkglibdir}/%{_arch}/%{_os}
 %{pkglibdir}/%{_arch}/%{_os}/npconfig
 %if ! %{build_biarch}
+%{pkglibdir}/%{_arch}/%{_os}/npplayer
 %{pkglibdir}/%{_arch}/%{_os}/npviewer
 %{pkglibdir}/%{_arch}/%{_os}/npviewer.bin
 %{pkglibdir}/%{_arch}/%{_os}/libxpcom.so
+%{pkglibdir}/%{_arch}/%{_os}/libnoxshm.so
 %endif
 %{pkglibdir}/%{_arch}/%{_os}/npwrapper.so
 
@@ -225,7 +227,9 @@ fi
 %defattr(-,root,root)
 %dir %{pkglibdir}/%{target_arch}
 %dir %{pkglibdir}/%{target_arch}/%{target_os}
+%{pkglibdir}/%{target_arch}/%{target_os}/npplayer
 %{pkglibdir}/%{target_arch}/%{target_os}/npviewer
 %{pkglibdir}/%{target_arch}/%{target_os}/npviewer.bin
 %{pkglibdir}/%{target_arch}/%{target_os}/libxpcom.so
+%{pkglibdir}/%{target_arch}/%{target_os}/libnoxshm.so
 %endif
