@@ -3,7 +3,7 @@
 %define name	nspluginwrapper
 %define version	1.1.0
 #define svndate	20061227
-%define rel	1
+%define rel	2
 %define release	%mkrel %{?svndate:0.%{svndate}.}%{rel}
 
 # define 32-bit arch of multiarch platforms
@@ -225,12 +225,12 @@ fi
 %dir %{pkglibdir}/%{_arch}/%{_os}
 %{pkglibdir}/%{_arch}/%{_os}/npconfig
 %if ! %{build_biarch}
-%{pkglibdir}/%{_arch}/%{_os}/npplayer
 %{pkglibdir}/%{_arch}/%{_os}/npviewer
 %{pkglibdir}/%{_arch}/%{_os}/npviewer.bin
 %{pkglibdir}/%{_arch}/%{_os}/libxpcom.so
 %{pkglibdir}/%{_arch}/%{_os}/libnoxshm.so
 %endif
+%{pkglibdir}/%{_arch}/%{_os}/npplayer
 %{pkglibdir}/%{_arch}/%{_os}/npwrapper.so
 
 %if %{build_biarch}
@@ -238,7 +238,6 @@ fi
 %defattr(-,root,root)
 %dir %{pkglibdir}/%{target_arch}
 %dir %{pkglibdir}/%{target_arch}/%{target_os}
-%{pkglibdir}/%{target_arch}/%{target_os}/npplayer
 %{pkglibdir}/%{target_arch}/%{target_os}/npviewer
 %{pkglibdir}/%{target_arch}/%{target_os}/npviewer.bin
 %{pkglibdir}/%{target_arch}/%{target_os}/libxpcom.so
