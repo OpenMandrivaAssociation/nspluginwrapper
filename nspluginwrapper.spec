@@ -3,7 +3,7 @@
 %define name	nspluginwrapper
 %define version	1.1.0
 #define svndate	20061227
-%define rel	2
+%define rel	3
 %define release	%mkrel %{?svndate:0.%{svndate}.}%{rel}
 
 # define 32-bit arch of multiarch platforms
@@ -57,6 +57,7 @@ Patch2:         nspluginwrapper-1.1.0-runtime-restart.patch
 Patch3:         nspluginwrapper-1.1.0-fork.patch
 Patch4:         nspluginwrapper-0.9.91.5-shutdown.patch
 Patch5:         nspluginwrapper-0.9.91.5-sleep.patch
+Patch6:		nspluginwrapper-1.1.0-visual-id.patch
 BuildRequires:	curl-devel
 BuildRequires:	gtk+2-devel
 BuildRequires:	libxt-devel
@@ -101,6 +102,7 @@ This package provides the npviewer program for %{target_os}/%{target_arch}.
 %patch3 -p1 -b .fork
 %patch4 -p1 -b .shutdown
 %patch5 -p1 -b .sleep
+%patch6 -p1 -b .visual-id
 
 %build
 export CFLAGS="$RPM_OPT_FLAGS"
