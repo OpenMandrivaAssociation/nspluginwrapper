@@ -3,8 +3,9 @@
 %define name	nspluginwrapper
 %define version	1.1.0
 #define svndate	20061227
-%define rel	3
+%define rel	4
 %define release	%mkrel %{?svndate:0.%{svndate}.}%{rel}
+%define _provides_exceptions xpcom
 
 # define 32-bit arch of multiarch platforms
 %define arch_32 %{nil}
