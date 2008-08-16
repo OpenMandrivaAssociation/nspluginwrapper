@@ -3,7 +3,7 @@
 %define name	nspluginwrapper
 %define version	1.1.0
 #define svndate	20061227
-%define rel	4
+%define rel	5
 %define release	%mkrel %{?svndate:0.%{svndate}.}%{rel}
 %define _provides_exceptions xpcom
 
@@ -141,6 +141,10 @@ else
   %if %{mdkversion} >= 200810
     if [ -f /usr/lib/mozilla/plugins/libflashplayer.so ] && [ ! -f %{plugindir}/npwrapper.libflashplayer.so ]; then
       %{_bindir}/%{name} -v -i /usr/lib/mozilla/plugins/libflashplayer.so
+    else
+      if [ -f /usr/lib/flash-plugin/libflashplayer.so ] && [ ! -f %{plugindir}/npwrapper.libflashplayer.so ]; then
+        %{_bindir}/%{name} -v -i /usr/lib/flash-plugin/libflashplayer.so
+      fi
     fi
   %endif
 fi
@@ -172,6 +176,19 @@ fi
 
 %triggerpostun -- FlashPlayer-plugin
 if [ ! -f /usr/lib/mozilla/plugins/libflashplayer.so ]; then
+  %{_bindir}/%{name} -v -r %{plugindir}/npwrapper.libflashplayer.so
+fi
+
+
+%triggerin -- flash-plugin
+if [ -f %{plugindir}/npwrapper.libflashplayer.so ]; then
+  %{_bindir}/%{name} -v -u %{plugindir}/npwrapper.libflashplayer.so
+else
+  %{_bindir}/%{name} -v -i /usr/lib/flash-plugin/libflashplayer.so
+fi
+
+%triggerpostun -- flash-plugin
+if [ ! -f /usr/lib/flash-plugin/libflashplayer.so ]; then
   %{_bindir}/%{name} -v -r %{plugindir}/npwrapper.libflashplayer.so
 fi
 
