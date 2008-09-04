@@ -3,9 +3,11 @@
 %define name	nspluginwrapper
 %define version	1.1.0
 #define svndate	20061227
-%define rel	5
+%define rel	6
 %define release	%mkrel %{?svndate:0.%{svndate}.}%{rel}
 %define _provides_exceptions xpcom
+# list of plugins to be wrapped by default ex: libflashplayer,nppdf
+%define nspw_plugins flashplayer,nppdf,rpnp,nphelix
 
 # define 32-bit arch of multiarch platforms
 %define arch_32 %{nil}
@@ -53,12 +55,15 @@ License:	GPLv2+
 Group:		Networking/WWW
 URL:		http://gwenole.beauchesne.info/projects/nspluginwrapper/
 Source0:	%{name}-%{version}%{?svndate:-%{svndate}}.tar.bz2
+Source1:	nspluginwrapper.filter
+Source2:	nspluginwrapper.script
+Source3:	update-nspluginwrapper
 # from Fedora
 Patch2:         nspluginwrapper-1.1.0-runtime-restart.patch
 Patch3:         nspluginwrapper-1.1.0-fork.patch
 Patch4:         nspluginwrapper-0.9.91.5-shutdown.patch
 Patch5:         nspluginwrapper-0.9.91.5-sleep.patch
-Patch6:		nspluginwrapper-1.1.0-visual-id.patch
+Patch6:         nspluginwrapper-1.1.0-visual-id.patch
 BuildRequires:	curl-devel
 BuildRequires:	gtk+2-devel
 BuildRequires:	libxt-devel
@@ -128,7 +133,17 @@ rm -rf $RPM_BUILD_ROOT
 make -C objs install DESTDIR=$RPM_BUILD_ROOT
 
 mkdir -p $RPM_BUILD_ROOT%{plugindir}
+mkdir -p $RPM_BUILD_ROOT%{_sbindir}
+mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/nspluginwrapper
+
+touch $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/nspluginwrapper
+
 ln -s %{pkglibdir}/%{_arch}/%{_os}/npwrapper.so $RPM_BUILD_ROOT%{plugindir}/npwrapper.so
+
+install -d -m 0755 %buildroot%{_var}/lib/rpm/filetriggers
+install -m 0644 %{SOURCE1} %buildroot%{_var}/lib/rpm/filetriggers
+install -m 0755 %{SOURCE2} %buildroot%{_var}/lib/rpm/filetriggers
+install -m 0755 %{SOURCE3} %buildroot%{_sbindir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -147,6 +162,16 @@ else
       fi
     fi
   %endif
+fi
+if [ ! -f %{_sysconfdir}/sysconfig/nspluginwrapper ]; then
+    cat > %{_sysconfdir}/sysconfig/nspluginwrapper <<EOF
+USE_NSPLUGINWRAPPER=yes
+MDV_PLUGINS="%{nspw_plugins}"
+USER_PLUGINS=""
+EOF
+else
+    sed -i "s/MDV_PLUGINS=.*/MDV_PLUGINS=\"%{nspw_plugins}\"/" \
+        %{_sysconfdir}/sysconfig/nspluginwrapper
 fi
 
 %preun
@@ -236,6 +261,8 @@ fi
 %doc README NEWS
 %{_bindir}/%{name}
 %{_bindir}/nspluginplayer
+%{_sbindir}/update-nspluginwrapper
+%ghost %{_sysconfdir}/sysconfig/nspluginwrapper
 %{plugindir}/npwrapper.so
 %dir %{pkglibdir}
 %dir %{pkglibdir}/noarch
@@ -252,6 +279,7 @@ fi
 %endif
 %{pkglibdir}/%{_arch}/%{_os}/npplayer
 %{pkglibdir}/%{_arch}/%{_os}/npwrapper.so
+%{_var}/lib/rpm/filetriggers/nspluginwrapper.*
 
 %if %{build_biarch}
 %files %{target_arch}
