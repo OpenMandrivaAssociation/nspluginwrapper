@@ -3,7 +3,7 @@
 %define name	nspluginwrapper
 %define version	1.1.0
 #define svndate	20061227
-%define rel	6
+%define rel	7
 %define release	%mkrel %{?svndate:0.%{svndate}.}%{rel}
 %define _provides_exceptions xpcom
 # list of plugins to be wrapped by default ex: libflashplayer,nppdf
@@ -64,6 +64,7 @@ Patch3:         nspluginwrapper-1.1.0-fork.patch
 Patch4:         nspluginwrapper-0.9.91.5-shutdown.patch
 Patch5:         nspluginwrapper-0.9.91.5-sleep.patch
 Patch6:         nspluginwrapper-1.1.0-visual-id.patch
+Patch7:         nspluginwrapper-enable-v4l1compat.patch
 BuildRequires:	curl-devel
 BuildRequires:	gtk+2-devel
 BuildRequires:	libxt-devel
@@ -109,6 +110,7 @@ This package provides the npviewer program for %{target_os}/%{target_arch}.
 %patch4 -p1 -b .shutdown
 %patch5 -p1 -b .sleep
 %patch6 -p1 -b .visual-id
+%patch7 -p1 -b .enable-v4l1compat
 
 %build
 export CFLAGS="$RPM_OPT_FLAGS"
