@@ -65,6 +65,7 @@ Patch4:         nspluginwrapper-0.9.91.5-shutdown.patch
 Patch5:         nspluginwrapper-0.9.91.5-sleep.patch
 Patch6:         nspluginwrapper-1.1.0-visual-id.patch
 Patch7:         nspluginwrapper-enable-v4l1compat.patch
+# From Fedora: https://www.redhat.com/archives/nspluginwrapper-devel-list/2008-October/msg00011.html
 Patch8:         nspluginwrapper-1.1.0-concurrent-rpc_method_invoke_rediff.patch
 
 BuildRequires:	curl-devel
