@@ -1,9 +1,9 @@
 # NOTE: this is a Linux-specific package, don't use the embedded
 # viewer on non-Linux platforms.
 %define name	nspluginwrapper
-%define version	1.1.0
+%define version	1.1.2
 #define svndate	20061227
-%define rel	8
+%define rel	1
 %define release	%mkrel %{?svndate:0.%{svndate}.}%{rel}
 %define _provides_exceptions xpcom
 # list of plugins to be wrapped by default ex: libflashplayer,nppdf
@@ -63,10 +63,7 @@ Patch2:         nspluginwrapper-1.1.0-runtime-restart.patch
 Patch3:         nspluginwrapper-1.1.0-fork.patch
 Patch4:         nspluginwrapper-0.9.91.5-shutdown.patch
 Patch5:         nspluginwrapper-0.9.91.5-sleep.patch
-Patch6:         nspluginwrapper-1.1.0-visual-id.patch
 Patch7:         nspluginwrapper-enable-v4l1compat.patch
-# From Fedora: https://www.redhat.com/archives/nspluginwrapper-devel-list/2008-October/msg00011.html
-Patch8:         nspluginwrapper-1.1.0-concurrent-rpc_method_invoke_rediff.patch
 
 BuildRequires:	curl-devel
 BuildRequires:	gtk+2-devel
@@ -91,6 +88,9 @@ Summary:	A viewer for %{target_os}/%{target_arch} compiled Netscape 4 plugins
 Group:		Networking/WWW
 %if "%{target_arch}" == "i386"
 Requires:	linux32
+# Flash 10 now requires 32 bit libcurl
+# http://blogs.adobe.com/penguin.swf/2008/08/curl_tradeoffs.html
+Suggests:       libcurl.so.4
 %endif
 
 %description %{target_arch}
@@ -112,9 +112,7 @@ This package provides the npviewer program for %{target_os}/%{target_arch}.
 %patch3 -p1 -b .fork
 %patch4 -p1 -b .shutdown
 %patch5 -p1 -b .sleep
-%patch6 -p0 -b .visual-id
 %patch7 -p1 -b .enable-v4l1compat
-%patch8 -p1 -b .rpc
 
 %build
 export CFLAGS="$RPM_OPT_FLAGS"
