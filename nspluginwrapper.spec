@@ -3,7 +3,7 @@
 %define name	nspluginwrapper
 %define version	1.1.2
 #define svndate	20061227
-%define rel	1
+%define rel	2
 %define release	%mkrel %{?svndate:0.%{svndate}.}%{rel}
 %define _provides_exceptions xpcom
 # list of plugins to be wrapped by default ex: libflashplayer,nppdf
@@ -62,7 +62,8 @@ Source3:	update-nspluginwrapper
 Patch2:         nspluginwrapper-1.1.0-runtime-restart.patch
 Patch3:         nspluginwrapper-1.1.0-fork.patch
 Patch4:         nspluginwrapper-0.9.91.5-shutdown.patch
-Patch5:         nspluginwrapper-0.9.91.5-sleep.patch
+Patch5:         nspluginwrapper-1.1.12-event.patch
+
 Patch7:         nspluginwrapper-enable-v4l1compat.patch
 
 BuildRequires:	curl-devel
@@ -88,9 +89,11 @@ Summary:	A viewer for %{target_os}/%{target_arch} compiled Netscape 4 plugins
 Group:		Networking/WWW
 %if "%{target_arch}" == "i386"
 Requires:	linux32
-# Flash 10 now requires 32 bit libcurl
+# Flash 10 now requires 32 bit libcurl, libnss3.so 
+# but Adobe's RPM package does not require them...
 # http://blogs.adobe.com/penguin.swf/2008/08/curl_tradeoffs.html
 Suggests:       libcurl.so.4
+Suggests:	libnss3.so
 %endif
 
 %description %{target_arch}
@@ -111,7 +114,7 @@ This package provides the npviewer program for %{target_os}/%{target_arch}.
 %patch2 -p1 -b .restart
 %patch3 -p1 -b .fork
 %patch4 -p1 -b .shutdown
-%patch5 -p1 -b .sleep
+%patch5 -p1 -b .event
 %patch7 -p1 -b .enable-v4l1compat
 
 %build
