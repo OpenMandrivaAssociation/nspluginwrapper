@@ -3,7 +3,7 @@
 %define name	nspluginwrapper
 %define version	1.1.2
 #define svndate	20061227
-%define rel	2
+%define rel	3
 %define release	%mkrel %{?svndate:0.%{svndate}.}%{rel}
 %define _provides_exceptions xpcom
 # list of plugins to be wrapped by default ex: libflashplayer,nppdf
@@ -64,6 +64,9 @@ Patch3:         nspluginwrapper-1.1.0-fork.patch
 Patch4:         nspluginwrapper-0.9.91.5-shutdown.patch
 Patch5:         nspluginwrapper-1.1.12-event.patch
 
+# https://www.redhat.com/archives/nspluginwrapper-devel-list/2008-October/msg00044.html
+Patch6:		nspluginwrapper-1.1.2-double-object-destruction.patch
+
 Patch7:         nspluginwrapper-enable-v4l1compat.patch
 
 BuildRequires:	curl-devel
@@ -115,6 +118,7 @@ This package provides the npviewer program for %{target_os}/%{target_arch}.
 %patch3 -p1 -b .fork
 %patch4 -p1 -b .shutdown
 %patch5 -p1 -b .event
+%patch6 -p0 -b .destruction
 %patch7 -p1 -b .enable-v4l1compat
 
 %build
