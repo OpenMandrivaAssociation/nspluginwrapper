@@ -1,9 +1,9 @@
 # NOTE: this is a Linux-specific package, don't use the embedded
 # viewer on non-Linux platforms.
 %define name	nspluginwrapper
-%define version	1.1.2
+%define version	1.1.8
 #define svndate	20061227
-%define rel	3
+%define rel	1
 %define release	%mkrel %{?svndate:0.%{svndate}.}%{rel}
 %define _provides_exceptions xpcom
 # list of plugins to be wrapped by default ex: libflashplayer,nppdf
@@ -58,16 +58,10 @@ Source0:	%{name}-%{version}%{?svndate:-%{svndate}}.tar.bz2
 Source1:	nspluginwrapper.filter
 Source2:	nspluginwrapper.script
 Source3:	update-nspluginwrapper
-# from Fedora
-Patch2:         nspluginwrapper-1.1.0-runtime-restart.patch
-Patch3:         nspluginwrapper-1.1.0-fork.patch
-Patch4:         nspluginwrapper-0.9.91.5-shutdown.patch
-Patch5:         nspluginwrapper-1.1.12-event.patch
-
-# https://www.redhat.com/archives/nspluginwrapper-devel-list/2008-October/msg00044.html
-Patch6:		nspluginwrapper-1.1.2-double-object-destruction.patch
-
 Patch7:         nspluginwrapper-enable-v4l1compat.patch
+# From Fedora
+Patch10:        nspluginwrapper-1.1.2-event.patch
+Patch11:        nspluginwrapper-1.1.8-fix-invalid-RPC-after-NPP_Destroy.patch
 
 BuildRequires:	curl-devel
 BuildRequires:	gtk+2-devel
@@ -114,12 +108,9 @@ This package provides the npviewer program for %{target_os}/%{target_arch}.
 %prep
 
 %setup -q
-%patch2 -p1 -b .restart
-%patch3 -p1 -b .fork
-%patch4 -p1 -b .shutdown
-%patch5 -p1 -b .event
-%patch6 -p0 -b .destruction
 %patch7 -p1 -b .enable-v4l1compat
+%patch10 -p1 -b .event
+%patch11 -p0 -b .invalid-RPC
 
 %build
 export CFLAGS="$RPM_OPT_FLAGS"
