@@ -1,7 +1,7 @@
 # NOTE: this is a Linux-specific package, don't use the embedded
 # viewer on non-Linux platforms.
 %define name	nspluginwrapper
-%define version	1.1.10
+%define version	1.2.0
 #define svndate	20061227
 %define rel	1
 %define release	%mkrel %{?svndate:0.%{svndate}.}%{rel}
@@ -61,8 +61,6 @@ Source3:	update-nspluginwrapper
 Patch7:         nspluginwrapper-enable-v4l1compat.patch
 # From Fedora
 Patch10:        nspluginwrapper-1.1.2-event.patch
-# (fc) 1.1.10-1mdv try to mimic FF3 behaviour (SVN)
-Patch11:	nspluginwrapper-dont-free-instance-in-NPP_Destroy.patch
 
 BuildRequires:	curl-devel
 BuildRequires:	gtk+2-devel
@@ -111,7 +109,6 @@ This package provides the npviewer program for %{target_os}/%{target_arch}.
 %setup -q
 %patch7 -p1 -b .enable-v4l1compat
 %patch10 -p1 -b .event
-%patch11 -p0 -b .dont-free-instance-in-NPP_Destroy
 
 %build
 export CFLAGS="$RPM_OPT_FLAGS"
@@ -270,7 +267,6 @@ fi
 %dir %{pkglibdir}
 %dir %{pkglibdir}/noarch
 %{pkglibdir}/noarch/npviewer
-%{pkglibdir}/noarch/mkruntime
 %dir %{pkglibdir}/%{_arch}
 %dir %{pkglibdir}/%{_arch}/%{_os}
 %{pkglibdir}/%{_arch}/%{_os}/npconfig
