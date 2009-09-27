@@ -3,7 +3,7 @@
 %define name	nspluginwrapper
 %define version	1.3.0
 #define svndate	20061227
-%define rel	1
+%define rel	2
 %define release	%mkrel %{?svndate:0.%{svndate}.}%{rel}
 %define _provides_exceptions xpcom
 # list of plugins to be wrapped by default ex: libflashplayer,nppdf
@@ -67,6 +67,7 @@ Provides:	%{name}-%{_arch} = %{version}
 Requires(post):	 %{name}-%{target_arch} = %{version}-%{release}
 Requires(preun): %{name}-%{target_arch} = %{version}-%{release}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+ExcludeArch:	%mips %arm
 
 %description
 nspluginwrapper makes it possible to use Netscape 4 compatible plugins
