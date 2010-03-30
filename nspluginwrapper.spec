@@ -111,8 +111,8 @@ This package provides the npviewer program for %{target_os}/%{target_arch}.
 %patch8 -p1 -b .fortify
 
 %build
-export CFLAGS="-O2 -g -pipe -Wformat -Werror=format-security"
-export CXXFLAGS="-O2 -g -pipe -Wformat -Werror=format-security"
+export CFLAGS="$RPM_OPT_FLAGS"
+export CXXFLAGS="$RPM_OPT_FLAGS"
 
 %if %{build_biarch}
 biarch="--with-biarch"
