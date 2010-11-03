@@ -3,7 +3,7 @@
 %define name	nspluginwrapper
 %define version	1.3.0
 #define svndate	20061227
-%define rel	5
+%define rel	6
 %define release	%mkrel %{?svndate:0.%{svndate}.}%{rel}
 %define _provides_exceptions xpcom
 # list of plugins to be wrapped by default ex: libflashplayer,nppdf
@@ -64,7 +64,7 @@ Patch8:		nspluginwrapper-fortify.patch
 BuildRequires:	curl-devel
 BuildRequires:	gtk+2-devel
 BuildRequires:	libxt-devel
-Provides:	%{name}-%{_arch} = %{version}
+Provides:	%{name}-%{_arch} = %{version}-%release
 Requires(post):	 %{name}-%{target_arch} = %{version}-%{release}
 Requires(preun): %{name}-%{target_arch} = %{version}-%{release}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
