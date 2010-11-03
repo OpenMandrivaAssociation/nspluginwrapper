@@ -58,6 +58,7 @@ Source0:	%{name}-%{version}%{?svndate:-%{svndate}}.tar.bz2
 Source1:	nspluginwrapper.filter
 Source2:	nspluginwrapper.script
 Source3:	update-nspluginwrapper
+Patch0:		nspluginwrapper-1.3.0-header-gcc4.5.patch
 Patch7:         nspluginwrapper-enable-v4l1compat.patch
 Patch8:		nspluginwrapper-fortify.patch
 
@@ -107,8 +108,7 @@ This package provides the npviewer program for %{target_os}/%{target_arch}.
 %prep
 
 %setup -q
-%patch7 -p1 -b .enable-v4l1compat
-%patch8 -p1 -b .fortify
+%apply_patches
 
 %build
 export CFLAGS="$RPM_OPT_FLAGS"
