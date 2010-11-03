@@ -3,7 +3,7 @@
 %define name	nspluginwrapper
 %define version	1.3.0
 #define svndate	20061227
-%define rel	6
+%define rel	7
 %define release	%mkrel %{?svndate:0.%{svndate}.}%{rel}
 %define _provides_exceptions xpcom
 # list of plugins to be wrapped by default ex: libflashplayer,nppdf
