@@ -1,9 +1,9 @@
 # NOTE: this is a Linux-specific package, don't use the embedded
 # viewer on non-Linux platforms.
 %define name	nspluginwrapper
-%define version	1.3.0
+%define version	1.3.2
 #define svndate	20061227
-%define rel	8
+%define rel	0
 %define release	%mkrel %{?svndate:0.%{svndate}.}%{rel}
 %define _provides_exceptions xpcom
 # list of plugins to be wrapped by default ex: libflashplayer,nppdf
@@ -53,15 +53,13 @@ Version:	%{version}
 Release:	%{release}
 License:	GPLv2+
 Group:		Networking/WWW
-URL:		http://gwenole.beauchesne.info/projects/nspluginwrapper/
-Source0:	%{name}-%{version}%{?svndate:-%{svndate}}.tar.bz2
+# http://www.redhat.com/archives/nspluginwrapper-devel-list/2011-April/msg00006.html
+URL:		https://github.com/davidben/nspluginwrapper
+Source0:	http://web.mit.edu/davidben/Public/nspluginwrapper/%{name}-%{version}%{?svndate:-%{svndate}}.tar.gz
 Source1:	nspluginwrapper.filter
 Source2:	nspluginwrapper.script
 Source3:	update-nspluginwrapper
-Patch0:		nspluginwrapper-1.3.0-header-gcc4.5.patch
-Patch7:         nspluginwrapper-enable-v4l1compat.patch
-Patch8:		nspluginwrapper-fortify.patch
-
+Patch0:		nspluginwrapper-enable-v4l1compat.patch
 BuildRequires:	curl-devel
 BuildRequires:	gtk+2-devel
 BuildRequires:	libxt-devel
@@ -109,20 +107,26 @@ This package provides the npviewer program for %{target_os}/%{target_arch}.
 %prep
 
 %setup -q
-%apply_patches
+%patch0 -p1 -b .enable-v4l1compat
 
 %build
 export CFLAGS="$RPM_OPT_FLAGS"
 export CXXFLAGS="$RPM_OPT_FLAGS"
 
 %if %{build_biarch}
-biarch="--with-biarch"
+enable_biarch="--enable-biarch"
 %else
-biarch="--without-biarch"
+enable_biarch="--disable-biarch"
 %endif
+
 mkdir objs
 pushd objs
-../configure --prefix=%{_prefix} --target-cpu=%{target_arch} --with-viewer $biarch --linux-only
+../configure \
+    --prefix=%{_prefix} \
+    --target-cpu=%{target_arch} \
+    --enable-viewer \
+    $biarch
+
 # XXX configure option
 echo "DONT_STRIP = yes" >> config-host.mak
 %make
@@ -274,7 +278,7 @@ fi
 %if ! %{build_biarch}
 %{pkglibdir}/%{_arch}/%{_os}/npviewer
 %{pkglibdir}/%{_arch}/%{_os}/npviewer.bin
-%{pkglibdir}/%{_arch}/%{_os}/libxpcom.so
+#%{pkglibdir}/%{_arch}/%{_os}/libxpcom.so
 %{pkglibdir}/%{_arch}/%{_os}/libnoxshm.so
 %endif
 %{pkglibdir}/%{_arch}/%{_os}/npplayer
@@ -288,6 +292,6 @@ fi
 %dir %{pkglibdir}/%{target_arch}/%{target_os}
 %{pkglibdir}/%{target_arch}/%{target_os}/npviewer
 %{pkglibdir}/%{target_arch}/%{target_os}/npviewer.bin
-%{pkglibdir}/%{target_arch}/%{target_os}/libxpcom.so
+#%{pkglibdir}/%{target_arch}/%{target_os}/libxpcom.so
 %{pkglibdir}/%{target_arch}/%{target_os}/libnoxshm.so
 %endif
