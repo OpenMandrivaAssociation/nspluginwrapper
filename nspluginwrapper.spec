@@ -65,7 +65,7 @@ Patch8:		nspluginwrapper-fortify.patch
 BuildRequires:	curl-devel
 BuildRequires:	gtk+2-devel
 BuildRequires:	libxt-devel
-BuildRequires:	libstdc++-devel
+BuildRequires:	libstdc++-static-devel
 Provides:	%{name}-%{_arch} = %{version}-%release
 Requires(post):	 %{name}-%{target_arch} = %{version}-%{release}
 Requires(preun): %{name}-%{target_arch} = %{version}-%{release}
