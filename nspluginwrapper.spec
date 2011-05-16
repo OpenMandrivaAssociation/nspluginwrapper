@@ -1,9 +1,9 @@
 # NOTE: this is a Linux-specific package, don't use the embedded
 # viewer on non-Linux platforms.
 %define name	nspluginwrapper
-%define version	1.3.2
+%define version	1.4.0
 #define svndate	20061227
-%define rel	0
+%define rel	1
 %define release	%mkrel %{?svndate:0.%{svndate}.}%{rel}
 %define _provides_exceptions xpcom
 # list of plugins to be wrapped by default ex: libflashplayer,nppdf
