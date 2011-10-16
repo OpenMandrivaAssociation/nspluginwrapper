@@ -35,9 +35,8 @@ Version:	1.4.4
 Release:	
 License:	GPLv2+
 Group:		Networking/WWW
-# http://www.redhat.com/archives/nspluginwrapper-devel-list/2011-April/msg00006.html
-URL:		https://github.com/davidben/nspluginwrapper
-Source0:	http://web.mit.edu/davidben/Public/nspluginwrapper/%{name}-%{version}%{?svndate:-%{svndate}}.tar.gz
+URL:		http://nspluginwrapper.org/download/
+Source0:	http://nspluginwrapper.org/download/%{name}-%{version}.tar.gz
 Source1:	nspluginwrapper.filter
 Source2:	nspluginwrapper.script
 Source3:	update-nspluginwrapper
@@ -47,7 +46,7 @@ BuildRequires:	gtk+2-devel
 BuildRequires:	libxt-devel
 BuildRequires:	libstdc++-static-devel
 Provides:	%{name}-%{_arch} = %{version}-%release
-Requires(post):	 %{name}-%{target_arch} = %{version}-%{release}
+Requires(post):	%{name}-%{target_arch} = %{version}-%{release}
 Requires(preun): %{name}-%{target_arch} = %{version}-%{release}
 ExcludeArch:	%mips %arm
 
