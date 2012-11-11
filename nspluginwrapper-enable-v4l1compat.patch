@@ -1,0 +1,19 @@
+diff -p -up nspluginwrapper-1.1.0/src/npw-viewer.sh~ nspluginwrapper-1.1.0/src/npw-viewer.sh
+--- nspluginwrapper-1.1.0/src/npw-viewer.sh~	2008-07-06 12:37:56.000000000 -0400
++++ nspluginwrapper-1.1.0/src/npw-viewer.sh	2008-09-17 17:17:28.000000000 -0400
+@@ -80,6 +80,15 @@ if test "$ARCH" != "$TARGET_ARCH"; then
+     fi
+ fi
+ 
++if test -f /usr/lib/libv4l/v4l1compat.so; then
++    if test -n "$LD_PRELOAD"; then
++        LD_PRELOAD="$LD_PRELOAD:/usr/lib/libv4l/v4l1compat.so"
++    else
++        LD_PRELOAD="/usr/lib/libv4l/v4l1compat.so"
++    fi
++    export LD_PRELOAD
++fi
++
+ # Disallow Xshm (implying XVideo too)
+ if test "$NPW_USE_XSHM" != "yes"; then
+     if test -x "$NPW_VIEWER_DIR/libnoxshm.so"; then
