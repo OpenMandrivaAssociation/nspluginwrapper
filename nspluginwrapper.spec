@@ -12,9 +12,9 @@
 %endif
 
 # define to build a biarch package
-%bcon_with biarch
+%bcond_with biarch
 %if "%{_arch}:%{arch_32}" == "x86_64:i386"
-%bcon_without biarch
+%bcond_without biarch
 %endif
 
 # define target architecture of plugins we want to support
@@ -32,7 +32,7 @@
 Summary:	A compatibility layer for Netscape 4 plugins
 Name:		nspluginwrapper
 Version:	1.4.4
-Release:	
+Release:	1
 License:	GPLv2+
 Group:		Networking/WWW
 URL:		http://nspluginwrapper.org/download/
@@ -40,9 +40,11 @@ Source0:	http://nspluginwrapper.org/download/%{name}-%{version}.tar.gz
 Source1:	nspluginwrapper.filter
 Source2:	nspluginwrapper.script
 Source3:	update-nspluginwrapper
+Source4:	%{name}.rpmlintrc
 Patch0:		nspluginwrapper-enable-v4l1compat.patch
+Patch1:		nspluginwrapper-underlink.patch
 BuildRequires:	curl-devel
-BuildRequires:	gtk+2-devel
+BuildRequires:	gtk+2.0-devel
 BuildRequires:	libxt-devel
 BuildRequires:	libstdc++-static-devel
 Provides:	%{name}-%{_arch} = %{version}-%release
@@ -122,12 +124,15 @@ This package provides the npviewer program for %{target_os}/%{target_arch}.
 %prep
 %setup -q
 %patch0 -p1 -b .enable-v4l1compat
+%patch1 -p1
 
 %build
-export CFLAGS="$RPM_OPT_FLAGS"
-export CXXFLAGS="$RPM_OPT_FLAGS"
+mkdir bin; pushd bin; ln -sf %{_bindir}/ld.bfd ld; popd
+export PATH=$PWD/bin:$PATH
+export CFLAGS="$RPM_OPT_FLAGS -fuse-ld=bfd"
+export CXXFLAGS="$RPM_OPT_FLAGS -fuse-ld=bfd"
 
-%if %{build_biarch}
+%if %{with biarch}
 biarch="--enable-biarch"
 %else
 biarch="--disable-biarch"
@@ -146,6 +151,7 @@ pushd objs
 popd
 
 %install
+export PATH=$PWD/bin:$PATH
 rm -rf %{buildroot}
 
 make -C objs install DESTDIR=%{buildroot}

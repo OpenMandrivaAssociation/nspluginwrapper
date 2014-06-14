@@ -1,0 +1,11 @@
+--- nspluginwrapper-1.4.4/configure.orig	2014-06-14 12:18:04.986480410 -0300
++++ nspluginwrapper-1.4.4/configure	2014-06-14 12:19:27.683474327 -0300
+@@ -500,7 +500,7 @@ fi
+ # check for Glib 2.0 compile CFLAGS
+ if $pkgconfig --exists glib-2.0; then
+     GLIB_CFLAGS=`$pkgconfig --cflags glib-2.0`
+-    GLIB_LIBS=`$pkgconfig --libs glib-2.0`
++    GLIB_LIBS="`$pkgconfig --libs glib-2.0` -lgthread-2.0 -ldl"
+     GLIB_VERSION=`$pkgconfig --modversion glib-2.0`
+ else
+     echo "GLIB 2.0 environment not found"
