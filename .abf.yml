@@ -1,5 +1,5 @@
 sources:
-  "nspluginwrapper-1.4.4.tar.gz:"	ffb271a741215874808d4a77d0a0dd65588a8440
-  "nspluginwrapper.filter:"	ee96f6d37c0cd145cb2658a63a8024b6703b93bf
-  "nspluginwrapper.script:"	aff760f52ed7f073b417bdcb7847773912afc7e9
-  "update-nspluginwrapper:"	a2b857a20b654a7f91beba183f7bb0534ed861df
+  nspluginwrapper-1.4.4.tar.gz:	ffb271a741215874808d4a77d0a0dd65588a8440
+  nspluginwrapper.filter:	ee96f6d37c0cd145cb2658a63a8024b6703b93bf
+  nspluginwrapper.script:	aff760f52ed7f073b417bdcb7847773912afc7e9
+  update-nspluginwrapper:	a2b857a20b654a7f91beba183f7bb0534ed861df
