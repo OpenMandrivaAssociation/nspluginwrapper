@@ -35,7 +35,7 @@ Version:	1.4.4
 Release:	1
 License:	GPLv2+
 Group:		Networking/WWW
-URL:		http://nspluginwrapper.org/download/
+URL:		https://nspluginwrapper.org/download/
 Source0:	http://nspluginwrapper.org/download/%{name}-%{version}.tar.gz
 Source1:	nspluginwrapper.filter
 Source2:	nspluginwrapper.script
