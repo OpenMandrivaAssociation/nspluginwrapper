@@ -43,6 +43,7 @@ Source3:	update-nspluginwrapper
 Source4:	%{name}.rpmlintrc
 Patch0:		nspluginwrapper-enable-v4l1compat.patch
 Patch1:		nspluginwrapper-underlink.patch
+BuildRequires:	make
 BuildRequires:	curl-devel
 BuildRequires:	gtk+2.0-devel
 BuildRequires:	libxt-devel
